@@ -40,11 +40,11 @@
         </form> 
 
 
-  <div id="message">  <!-- hier wordt de response ingezet-->
+  <div id="message">  <!-- hier wordt het infodeel van de response ingezet-->
     geen data opgevraagd
   </div>
 
-  <div id="content">  <!-- hier wordt de response ingezet-->
+  <div id="content">  <!-- hier wordt de response zelf ingezet-->
     data
   </div>
   <br>
@@ -54,14 +54,13 @@
     // ***************************************************************
     // *******************   HET FETCH DEEL **************************
     // ***************************************************************
-  
-    const urlGET = 'http://localhost/php_api_test/apiAstrum_Games/basic_1_klaar/api_get_games_basic1.php';
-    
 
-    // ***************************************************************
+    // ******** API basic voorbeeld met data (localhost) ***********
+
+    const urlGET = 'http://localhost/php_api_test/apiAstrum_Games/basic_1_klaar/api_get_games_basic.php';
+    
     // ************** GET FETCH zonder PARAMETER *********************
-    // ***************************************************************   
-   
+  
     async function fetch_gamedata_NoParams() {
       
       let response = await fetch(urlGET);
@@ -70,11 +69,10 @@
     };
 
     
-    // ***************************************************************
-    // ************** GET FETCH MET 1 PARAMETER ************************
-    // ***************************************************************   
+    // *************************************************************************
+    // *** GET FETCH MET accessCode, die wordt uit het formulier gehaald *******
+    // *************************************************************************   
    
-  
     async function fetch_gamedata_GetParams(event) {
       event.preventDefault()
       
@@ -82,12 +80,9 @@
       // filter = document.getElementById("filter").value; // filter hoeft nog niet..
 
       let urlGETParam = urlGET + "?accessCode=" + accessCode
-      //let urlGETParam = urlGET + "?accessCode=" + accessCode +"&filter=" + filter;
-      
       let response = await fetch(urlGETParam)
 
       let responseData = await response.json()
-      // let responseData = dataArray.toString();
 
       let gameData = responseData.dataArray
       let infoOverParam = responseData.infoOverParam
