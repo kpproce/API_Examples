@@ -29,7 +29,6 @@
             }
         }
 
-
         public function getConnection() {
             // https://www.codeofaninja.com/2014/06/php-object-oriented-crud-example-oop.html
             // https://www.youtube.com/watch?v=OEWXbpUMODk
@@ -79,7 +78,6 @@
             ];
             return $result;
         }
-
     }
 
     function testGetGameData($code) {

@@ -14,12 +14,8 @@
         ************************************************** -->
 
   <div id="menu">
-    <h1>Roep server aan met FETCH en toon responce</h1>
-
-   
+    <h1>Roep API aan met database (object/mySQL) en toon responce</h1>
          <button onclick="fetch_gamedata_NoParams()">fetch game data zonder pararmeter</button>
-      
-
   </div>
 
 
@@ -57,8 +53,8 @@
 
     // ******** API met een basic databasedeel (localhost) ***********
 
-    const urlGET = 'http://localhost/php_api_test/apiAstrum_Games/basic_1_klaar/DB_obj_basic.php';
-    
+    const urlGET1 = 'http://localhost/php_api_test/apiAstrum_Games/basic_1_klaar/DB_obj_basic.php';
+    const urlGET = 'http://localhost/php_api_test/apiAstrum_Games/basic_1_klaar/api_get_games_DB.php'; 
     // ************** GET FETCH zonder PARAMETER *********************
   
     async function fetch_gamedata_NoParams() {
@@ -79,6 +75,7 @@
       accessCode = document.getElementById("accessCode").value
       // filter = document.getElementById("filter").value; // filter hoeft nog niet..
 
+  
       let urlGETParam = urlGET + "?accessCode=" + accessCode
       let response = await fetch(urlGETParam)
 

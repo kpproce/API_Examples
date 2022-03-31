@@ -56,6 +56,10 @@
             // roles are CRUD (ore a part like CR) 
             // er zit een houdbaarheid aan de rechten bij de rol
 
+            // **************   TEST of databaseDeel werkt *************
+            // De accessCode:  staatAlleenInDatabase -- kun je gebruiken om te testen, die staat in de database bij toegestande codes
+            // **************  Je kunt uiteraard ook zelf een code toevoegen in je database  *************
+
             $stmt = $this->conn->prepare("SELECT roles, validTill FROM accesscodes WHERE code=?");
             $stmt->bind_param("s", $accessCode);
             // echo (" code:" . $code);
