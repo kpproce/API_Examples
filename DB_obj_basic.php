@@ -45,7 +45,6 @@
             return $this->conn;
         } 
 
-        
         public function getLastConnectMessage(){
             return $this.connectMessage;
         }
@@ -65,12 +64,15 @@
                     }
                 }
                 $errorMessage = $errorMessage . " is allowed to get (view) data" ;
-               
+                $allowedGet = true;
             } else {
                 $errorMessage = $errorMessage . " not allowed, no get (view) rights" ;
+
             }
-            $result = [ 
+            $result = [
                 'code'         => $accessCode,
+                'roles'        => $roles,  // not in use in this version
+                'allowedGet'   => $allowedGet,
                 'errorMessage' => $errorMessage,  
                 'dataArray'    => $resultArray
             ];
@@ -107,7 +109,7 @@
         // testGetGameData("kijken123");
         // testGetGameData("kijk123"); 
         // echo nl2br ("\n PHP: " .  phpversion());
-        
+
     // *************************************************
 
 
