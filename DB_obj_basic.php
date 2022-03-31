@@ -53,6 +53,7 @@
             $allowedGet = false;
             $errorMessage = $accessCode;
             $resultArray = [];
+            $roles = []; // not in use in thhis version
             
             if ($accessCode==="kijk123" || $accessCode==="admin123") {
                 $sql = "SELECT id, name, url, myRating FROM games";
@@ -70,18 +71,16 @@
 
             }
             $result = [
-                'code'         => $accessCode,
+                'code'         => $accessCode, // de aan de API meegestuurde accessCode
                 'roles'        => $roles,  // not in use in this version
-                'allowedGet'   => $allowedGet,
+                'allowedGet'   => $allowedGet, // voor het gemak van de ontvangende partij, wel of geen data gekregen
                 'errorMessage' => $errorMessage,  
-                'dataArray'    => $resultArray
+                'dataArray'    => $resultArray  // hier zit de data in.
             ];
             return $result;
         }
 
     }
-
-
 
     function testGetGameData($code) {
         $database = new Database();  
