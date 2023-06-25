@@ -14,11 +14,7 @@
         ************************************************** -->
 
   <div id="menu">
-    <h1>Roep server aan met FETCH en toon responce</h1>
-
-   
-         <button onclick="fetch_gamedata_NoParams()">fetch game data zonder pararmeter</button>
-      
+    menu
 
   </div>
 
@@ -28,7 +24,7 @@
         ************************************************** -->
         Haal de game info en score op        
         
-        <form onSubmit="fetch_gamedata_GetParams(event)" method="get">
+        <form onSubmit="fetch_gamedata_GetParams_v2(event)" method="get">
           <fieldset>
             <label for="accessCode">accessCode</label><br>
             <input type="text" id="accessCode" name="accessCode" value="kijk123"><br>
@@ -38,6 +34,7 @@
             <input type="submit" value="Submit">
           </fieldset>
         </form> 
+        
 
 
   <div id="message">  <!-- hier wordt het infodeel van de response ingezet-->
@@ -57,18 +54,10 @@
 
     // ******** API basic voorbeeld met data (localhost) ***********
 
-    const urlGET = 'http://localhost/php_api_test/apiAstrum_Games/basic_1_klaar/api_get_games_basic.php';
-    
-    // ************** GET FETCH zonder PARAMETER *********************
   
-    async function fetch_gamedata_NoParams() {
-      
-      let response = await fetch(urlGET);
-      let responseData = await response.text();
-      document.getElementById("content").innerHTML=responseData;
-    };
-
+    const urlGET = 'http://localhost/waarnemingen/backend/api_get_waarnemingen.php';
     
+            
     // *************************************************************************
     // *** GET FETCH MET accessCode, die wordt uit het formulier gehaald *******
     // *************************************************************************   
@@ -90,6 +79,73 @@
       document.getElementById("message").innerHTML = infoOverParam
       document.getElementById("content").innerHTML = JSON.stringify(gameData)
     };
+
+
+    // *************************************************************************
+    // *** GET FETCH MET accessCode, die wordt uit het formulier gehaald *******
+    // *************************************************************************   
+   
+    function showDataArray2(dataArray) {
+      document.getElementById("content").innerHTML = dataArray
+    }
+
+    function showDataArray3(dataArray) {
+      let htmlCode = ""
+      dataArray.forEach(element => {
+        htmlCode += '<p>' + 'per regel stringify' + '</p>'
+      });
+      document.getElementById("content").innerHTML = htmlCode
+    }
+
+    function showDataArray4(dataArray) {
+      let htmlCode = ""
+      dataArray.forEach(element => {
+        htmlCode += '<p>' + element.name + '</p>'
+      });
+      document.getElementById("content").innerHTML = htmlCode
+    }
+
+
+    function showDataArray5(dataArray) { //  *****  DEZE wordt gebruikt ***** 
+      let htmlCode = "<table>"
+      dataArray.forEach(element => {
+        htmlCode += '<tr><td>' + element.date_time + '</td><td>'+ element.omschrijving + '</td><td>' + element.waarde + '</td></tr>'
+      });
+      htmlCode += "</table>"
+      document.getElementById("content").innerHTML = htmlCode
+    }
+
+
+    async function fetch_gamedata_GetParams_v2(event) {
+      event.preventDefault()
+      
+      accessCode = document.getElementById("accessCode").value
+      // filter = document.getElementById("filter").value; // filter hoeft nog niet..
+
+      let urlGETParam = urlGET + "?accessCode=" + accessCode
+      let response = await fetch(urlGETParam)
+
+      let responseData = await response.json()
+
+      let gameData = responseData.dataArray
+      let infoOverParam = responseData.infoOverParam
+
+      document.getElementById("message").innerHTML = infoOverParam
+      
+      // document.getElementById("content").innerHTML = JSON.stringify(gameData)
+     // document.getElementById("content").innerHTML = 'test'
+    
+      // showDataArray2(JSON.stringify(gameData))
+      // showDataArray3(gameData)
+      console.log(gameData);
+      showDataArray5(gameData)
+
+      
+    
+    };
+
+
+
 
   </script>
 

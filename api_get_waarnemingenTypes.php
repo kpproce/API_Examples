@@ -10,11 +10,12 @@
     header("Access-Control-Max-Age: 3600");
     header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
   
-    include_once 'DB_obj_basic.php'; // is een class/object
+    include_once 'DB_obj_basic_CR.php'; // is een class/object
   
     $infoOverParam = "";
     $response = []; 
     $message = "";  
+    $allowedGet = false;
     $dataArray = []; 
     
     if (empty($_GET)) {
@@ -23,29 +24,30 @@
 
         $response = [
             'infoOverParam' => $infoOverParam,
+            'allowedGet'   => $allowedGet, 
             'message'       => "geen toegang",
             'accessCode'    => "",
             'errorMessage'  => "",
-            'roles'         => "X",
             'dataArray'     =>  $dataArray
         ];
 
     } else {
        
-        $infoOverParam = "GET gebruikt..<br> ";
+        $infoOverParam = "GET gebruikt ";
         if (isset($_GET['accessCode'])) {
             $accessCode = strtolower($_GET["accessCode"]);
 
             $database = new Database();      // get database connection
             $db = $database->getConnection();
 
-            $result = $database->getGames($accessCode, "noFilter");
+            // ***********************************************************
+            // je checked niet of de accessCode toegang geeft 
+            // maar je vraagt direct data op via het object $database en stuurt de accessCode mee. 
+            // bij het bevragen van de database (SQL) wordt de accessCode gebruikt
+
+            // ****** hier wordt de data dus opgevraagd opgehaald ************
+            $result = $database->getWaarnemingTypes();
             
-            // vanaf hie zou je normaal niet hier doen, maar client side.
-
-            $message = "accessCode: " . $result['code'] . " levert de volgende rechten: " . $result['errorMessage'] . " \r\n " ;
-        
-
             $dataArray = $result['dataArray']; 
             if (count($dataArray)>0 ) {
                 $message = $message . "Er zijn games opgehaald";
@@ -64,9 +66,8 @@
         $response = [
             'infoOverParam' => $infoOverParam,
             'message'       => $message,
-            'accessCode'    => $accessCode,
+            'accessCode'    => $accessCode,  // de aan de API meegestuurde accessCode
             'errorMessage'  => $result['errorMessage'],
-            'roles'         => $result['roles'],
             'dataArray'     => $dataArray
         ];
 
@@ -74,5 +75,5 @@
 
     echo json_encode($response);
     // let op dat je data terugstuurt. In JSON format
-
+    // echo "hallo"
 ?>
